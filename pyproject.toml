@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "citecheck"
+version = "0.1.0"
+description = "Verify manuscript citations against Crossref — catch broken DOIs, metadata mismatches, and retractions."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "hyeonjoong" }]
+keywords = ["citations", "crossref", "doi", "bibtex", "references", "academic", "manuscript"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Science/Research",
+    "Topic :: Text Processing :: Markup :: LaTeX",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = []  # standard library only
+
+[project.urls]
+Homepage = "https://github.com/hyeonjoong/citecheck"
+Issues = "https://github.com/hyeonjoong/citecheck/issues"
+
+[project.scripts]
+citecheck = "citecheck.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+include = ["citecheck*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

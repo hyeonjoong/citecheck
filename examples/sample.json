@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ioannidis2005",
+    "type": "article-journal",
+    "title": "Why Most Published Research Findings Are False",
+    "author": [{ "family": "Ioannidis", "given": "John P. A." }],
+    "container-title": "PLoS Medicine",
+    "issued": { "date-parts": [[2005, 8, 30]] },
+    "DOI": "10.1371/journal.pmed.0020124",
+    "PMID": "16060722"
+  },
+  {
+    "id": "broken_doi",
+    "type": "article-journal",
+    "title": "A paper whose DOI was mistyped",
+    "author": [{ "family": "Smith", "given": "Jane" }],
+    "issued": { "date-parts": [[2020]] },
+    "DOI": "10.9999/does.not.exist"
+  }
+]

@@ -1,0 +1,5 @@
+Study ID,Authors,Year,Title,Journal,Article DOI,PMID
+S1,"Ioannidis JPA",2005,Why Most Published Research Findings Are False,PLoS Medicine,10.1371/journal.pmed.0020124,16060722
+S2,"Kim H, Lee S",2019,A study that does not exist,J Fake Med,10.9999/does.not.exist,
+S3,"Moher D, Liberati A",2009,Preferred Reporting Items for Systematic Reviews and Meta-Analyses: The PRISMA Statement,PLoS Medicine,https://doi.org/10.1371/journal.pmed.1000097,19621072
+S4,"Schulz KF",2010,CONSORT 2010 Statement,BMJ,,20332509

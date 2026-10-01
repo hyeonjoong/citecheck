@@ -1,4 +1,22 @@
-@article{good2015,
+% Demo reference list for citecheck. Every entry is a real, live Crossref record,
+% so `python3 -m citecheck examples/sample.bib --verbose` shows one of each
+% finding: a clean ✓, a broken DOI ✗, and three ! warnings (a correction issued,
+% a wrong year, and a reference with no DOI at all).
+%
+% prisma2009 is the clean one, NOT ioannidis2005: PLoS Medicine issued a
+% correction against Ioannidis 2005 in 2022, so it warns now — which is exactly
+% the check that entry is here to demonstrate. (This comment claimed a ✓ for
+% ioannidis2005 long after that stopped being true.)
+
+@article{prisma2009,
+  title   = {Preferred Reporting Items for Systematic Reviews and Meta-Analyses: The PRISMA Statement},
+  author  = {Moher, David and Liberati, Alessandro and Tetzlaff, Jennifer and Altman, Douglas G.},
+  journal = {PLoS Medicine},
+  year    = {2009},
+  doi     = {10.1371/journal.pmed.1000097}
+}
+
+@article{ioannidis2005,
   title   = {Why Most Published Research Findings Are False},
   author  = {Ioannidis, John P. A.},
   journal = {PLoS Medicine},
@@ -14,10 +32,11 @@
 }
 
 @article{wrong_year,
-  title   = {Why Most Published Research Findings Are False},
-  author  = {Ioannidis, John P. A.},
-  year    = {2019},
-  doi     = {10.1371/journal.pmed.0020124}
+  title   = {CONSORT 2010 Statement: updated guidelines for reporting parallel group randomised trials},
+  author  = {Schulz, Kenneth F. and Altman, Douglas G. and Moher, David},
+  journal = {BMJ},
+  year    = {2015},
+  doi     = {10.1136/bmj.c332}
 }
 
 @book{no_doi,

@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.11", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m pytest -q -p no:cacheprovider
+
+  # The test job imports the source tree. This job checks what users install:
+  # the wheel must hold every module and work from outside the checkout.
+  wheel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Build the wheel
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip wheel --no-deps . -w dist
+      - name: Check that the wheel holds every module
+        run: |
+          python - <<'EOF'
+          import glob
+          import zipfile
+
+          wheel = glob.glob("dist/citecheck-*.whl")[0]
+          names = set(zipfile.ZipFile(wheel).namelist())
+          modules = ["__init__", "__main__", "_version", "cli", "core", "office", "parsers", "profile"]
+          missing = [m for m in modules if f"citecheck/{m}.py" not in names]
+          assert not missing, f"missing from {wheel}: {missing}"
+          print(f"{wheel}: all {len(modules)} modules present")
+          EOF
+      - name: Install the wheel into a fresh venv and run it
+        run: |
+          python -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/python" -m pip install dist/citecheck-*.whl
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/venv/bin/citecheck" --version
+          "$RUNNER_TEMP/venv/bin/python" -m citecheck --list-checks
+          # Offline (a proxy that refuses every connection) must be exit 3,
+          # never 0.
+          set +e
+          https_proxy=http://127.0.0.1:9 HTTPS_PROXY=http://127.0.0.1:9 \
+            "$RUNNER_TEMP/venv/bin/citecheck" "$GITHUB_WORKSPACE/examples/sample.bib" --no-color --delay 0
+          code=$?
+          set -e
+          echo "exit code: $code"
+          test "$code" -eq 3
